@@ -27,9 +27,7 @@ let notion = process.env.NOTION_INTEGRATION_KEY;
 
 //取得login，回傳
 app.post('/postNotionLogin', (req, res) => {
-  console.log('postNotionLogin前',DatabaseId);
   const { secretKey, databaseId } = req.body;
-  console.log('postNotionLogin後', databaseId);
   // let id = '0';
   // for (let i = 0; i < dummyData.dummy.length; i++) {
   //   if (dummyData.dummy[i].secretKey === secretKey) {
@@ -50,7 +48,6 @@ app.post('/postNotionLogin', (req, res) => {
   try {
     notion = new Client({ auth: secretKey });
     DatabaseId = databaseId;
-    console.log('postNotionLogin try-後', DatabaseId);
     res.send('success');
   } catch (error) {
     console.log(error);
@@ -59,13 +56,11 @@ app.post('/postNotionLogin', (req, res) => {
 
 //取得資料庫
 app.get('/getNotionDb', async (req, res) => {
-  console.log('getNotionDb try-前', DatabaseId);
   try {
     const response = await notion.databases.query({
       database_id: DatabaseId,
     });
     res.status(200).send({data: response, status: 'success',message:'登入成功'});
-    console.log('getNotionDb try-後', DatabaseId);
     console.log('success');
   } catch (error) {
     console.log(error);
@@ -86,14 +81,12 @@ app.get('/getNotionDb', async (req, res) => {
 //取得Page的內容
 app.get('/getNotionBlockList', async (req, res) => {
   const pageId = req.query.page;
-  console.log('getNotionBlockList 前', pageId);
   try {
     const response = await notion.blocks.children.list({
       block_id: pageId,
       page_size: 150,
     });
     res.status(200).send(response);
-    console.log('getNotionBlockList 後', pageId, DatabaseId);
     console.log('success');
   } catch (error) {
     console.log(error);
