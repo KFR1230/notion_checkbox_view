@@ -15,7 +15,6 @@ app.use((req, res, next) => {
     'GET,PUT,POST,PATCH,DELETE,OPTIONS'
   );
   res.append('Access-Control-Allow-Headers', 'Content-Type');
-  res.append('Access-Control-Max-Age', 900)
   next();
 });
 
