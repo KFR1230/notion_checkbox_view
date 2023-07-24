@@ -8,6 +8,12 @@ const dummyData = require('./db.json');
 require('dotenv').config();
 app.use(cors()); //允許Express後端和React前端通過API回應資料
 app.use(bodyParser.json()); // 才拿得到req.body資料（解析http請求，將解析完成的請求儲存在req.body）
+app.use((req,res,next)=>{
+  res.append('Access-Control-Allow-Origin', ['*']);
+  res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS');
+  res.append('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+})
 
 let DatabaseId = process.env.NOTION_DATABASE_ID;
 let notion = process.env.NOTION_INTEGRATION_KEY;
@@ -102,7 +108,6 @@ app.patch('/patchNotionBlock', async (req, res) => {
         checked: checkboxState,
       },
     });
-    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).send(response);
     console.log('success');
   } catch (error) {
@@ -121,7 +126,6 @@ app.patch('/patchNotionProperties', async (req, res) => {
         },
       },
     });
-    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).send(response);
     console.log('success');
   } catch (error) {
