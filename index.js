@@ -102,6 +102,7 @@ app.patch('/patchNotionBlock', async (req, res) => {
         checked: checkboxState,
       },
     });
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).send(response);
     console.log('success');
   } catch (error) {
@@ -120,6 +121,7 @@ app.patch('/patchNotionProperties', async (req, res) => {
         },
       },
     });
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).send(response);
     console.log('success');
   } catch (error) {
